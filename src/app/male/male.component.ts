@@ -34,11 +34,11 @@ export class MaleComponent implements OnInit {
       ele.addEventListener('click',()=> {
       const id = ele["id"];
       if( this.side == 0){
-        let part = this.frt[id.split("_")[1]];
+        let part = this.frt[id.split("_")[1]-1];
         console.log(part);
         this.parts.push(part);
       }else {
-        let part = this.bck[id.split("_")[1]];
+        let part = this.bck[id.split("_")[1]-1];
         console.log(part);
         this.parts.push(part);
       }
