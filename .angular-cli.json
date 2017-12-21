@@ -21,7 +21,12 @@
       "styles": [
         "styles.css"
       ],
-      "scripts": [],
+      "scripts": [
+        "assets/js/jquery.min.js",
+        "assets/js/malefemale2x.min.js",
+        "assets/js/bootstrap.min.js",
+        "assets/js/d3.v3.min.js"
+      ],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",

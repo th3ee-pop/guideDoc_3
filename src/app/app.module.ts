@@ -6,6 +6,7 @@ import { RouterModule, Routes} from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { AppComponent } from './app.component';
+import { MaleComponent } from './male/male.component';
 import { BodySelectComponent } from './body-select/body-select.component';
 import { SearchSymptomComponent } from './search-symptom/search-symptom.component';
 import { ResultLoopComponent } from './result-loop/result-loop.component';
@@ -21,6 +22,8 @@ const appRoutes: Routes = [
 
 @NgModule({
   declarations: [
+    AppComponent,
+    MaleComponent,
     AppComponent,
     BodySelectComponent,
     SearchSymptomComponent,
