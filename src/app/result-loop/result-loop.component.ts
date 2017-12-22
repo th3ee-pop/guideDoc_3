@@ -14,7 +14,7 @@ export class ResultLoopComponent implements OnInit {
   _value: string;
   probableDisease: Array<any>;
   probableDepartment= [];
-  selectedSym = ['发烧', '头痛'];
+  selectedSym = [];
   data = [
     {
       key    : '1',
@@ -33,10 +33,13 @@ export class ResultLoopComponent implements OnInit {
       address: 'Sidney No. 1 Lake Park',
     }
   ];
-  constructor( private httpService: HttpService) {
+  constructor( public httpService: HttpService) {
   }
 
   ngOnInit() {
+    console.log(this.httpService.searchPart.Name);
+    this.selectedSym.push(this.httpService.searchPart.Name);
+    console.log(sessionStorage.getItem('search_part'));
     for (let i = 0; i < 20; i++) {
       this.list.push({
         key: i.toString(),
@@ -45,8 +48,7 @@ export class ResultLoopComponent implements OnInit {
         direction: Math.random() * 2 > 1 ? 'right' : ''
       });
     }
-    console.log(this.list);
-    this.httpService.getDisease(['s15527', 's70074']).subscribe((res) => {
+    this.httpService.getDisease([this.httpService.searchPart.Id]).subscribe((res) => {
       console.log(res);
       this.probableDisease = res.Results.PosDis;
       console.log(res.Results.PosDep);
