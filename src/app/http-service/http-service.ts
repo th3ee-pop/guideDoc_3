@@ -9,6 +9,7 @@ import 'rxjs/add/operator/do';
 @Injectable()
 
 export class HttpService {
+  searchPart: any;
   baseUrl = 'http://59.110.52.133:9999/kgInterface/';
   constructor(
     private http: HttpClient,

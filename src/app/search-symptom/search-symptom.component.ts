@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../http-service/http-service';
+import { Router, Route } from '@angular/router';
 
 @Component({
   selector: 'app-search-symptom',
@@ -31,7 +32,7 @@ export class SearchSymptomComponent implements OnInit {
       address: 'Sidney No. 1 Lake Park',
     }
   ];
-  constructor(private httpService: HttpService) {
+  constructor(public httpService: HttpService, private router: Router) {
   }
   ngOnInit() {
     for (let i = 0; i < 20; i++) {
@@ -43,11 +44,25 @@ export class SearchSymptomComponent implements OnInit {
       });
     }
     console.log(this.list);
-    this.httpService.getSymptoms('发烧').subscribe((res) => {
+    this.httpService.getSymptoms('烧').subscribe((res) => {
       console.log(res);
       this.Symptomes = res.Results;
       console.log(this.Symptomes);
     });
+  }
+
+  searchSymptom() {
+    this.httpService.getSymptoms(this._value).subscribe((res) => {
+      console.log(res);
+      this.Symptomes = res.Results;
+      console.log(this.Symptomes);
+    });
+  }
+  selectSymptom(symptom: any) {
+    console.log(symptom);
+    this.httpService.searchPart = symptom;
+    sessionStorage.setItem('search_part', symptom);
+    this.router.navigate(['/result_loop']);
   }
 
   filterOption(inputValue, option) {

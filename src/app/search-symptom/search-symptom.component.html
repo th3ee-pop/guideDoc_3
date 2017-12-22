@@ -40,13 +40,13 @@
         </div>
         <div nz-col [nzSpan]="8" >
           <div nz-row [nzType]="'flex'" [nzJustify]="'center'">
-            <nz-input [nzType]="'search'" [nzPlaceHolder]="'input search text'" [(ngModel)]="_value" style="width: 40%;"></nz-input>
+            <nz-input [nzType]="'search'" [nzPlaceHolder]="'输入症状'" [(ngModel)]="_value" (ngModelChange)="searchSymptom()" style="width: 40%;"></nz-input>
           </div>
           <br>
           <br>
           <div nz-row [nzType]="'flex'" [nzJustify]="'center'">
             <div class="height-300">
-              <nz-tag style="margin-bottom: 1%" [nzColor]="'cyan'" *ngFor="let symptom of Symptomes">
+              <nz-tag  style="margin-bottom: 1%" [nzColor]="'cyan'" *ngFor="let symptom of Symptomes" (click)="selectSymptom(symptom)">
                 {{symptom.Name}}
               </nz-tag>
             </div>
