@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {HttpService} from "../http-service/http-service";
 
 @Component({
   selector: 'app-body-select',
@@ -9,39 +10,23 @@ export class BodySelectComponent implements OnInit {
 
   sex = 0 ;
   side = 0 ;
+  part='全身';
   list: any[] = [];
   title = 'app';
   current = 0;
   _value: string;
-  data = [
-    {
-      key    : '1',
-      name   : '高血压',
-      age    : '心血管内科',
-      address: 'New York No. 1 Lake Park',
-    }, {
-      key    : '2',
-      name   : '血栓',
-      age    : '心血管内科',
-      address: 'London No. 1 Lake Park',
-    }, {
-      key    : '3',
-      name   : '血管炎',
-      age    : '心血管内科',
-      address: 'Sidney No. 1 Lake Park',
-    }
-  ];
-
+  data ;
+  constructor(public httpService: HttpService){}
   ngOnInit() {
-    for (let i = 0; i < 20; i++) {
-      this.list.push({
-        key: i.toString(),
-        title: `content${i + 1}`,
-        description: `description of content${i + 1}`,
-        direction: Math.random() * 2 > 1 ? 'right' : ''
-      });
-    }
-    console.log(this.list);
+    const params = {
+      "Name":"",
+      "Body":"bp15500",
+      "Gender":"F"
+    };
+    // this.httpService.getSymptomsByBodyParts(params).subscribe((res)=> {
+    //   console.log("work!");
+    //   console.log(res);
+    // });
   }
 
   filterOption(inputValue, option) {
@@ -68,5 +53,10 @@ export class BodySelectComponent implements OnInit {
   }
   getParts(event:any){
     console.log(event);
+    this.part = event;
+    this.httpService.getSymptoms("头疼").subscribe((res)=>{
+      console.log(res);
+      this.data = res.Results;
+    })
   }
 }

@@ -72,6 +72,31 @@
           </div>
           <div nz-col [nzSpan]="6"></div>
         </div>
+        <div nz-row>
+            <div nz-col [nzSpan]="6"></div>
+            <div nz-col [nzSpan]="12">
+              <h2 style="font-weight: 200">
+                已选部位
+              </h2>
+              <br>
+              <div class="height-300">
+                <nz-tag style="margin-bottom: 1%" [nzColor]="'red'">
+                  {{part}}
+                </nz-tag>
+              </div>
+          <br>
+          <h2>
+            相关症状
+          </h2>
+          <br>
+          <div class="height-300">
+            <nz-tag style="margin-bottom: 1%" [nzColor]="'cyan'" *ngFor="let dep of data">
+              {{dep.Name}}
+            </nz-tag>
+          </div>
+            </div>
+            <div nz-col [nzSpan]="6"></div>
+        </div>
           <div nz-row>
             <button nz-button [nzType]="'default'" style="left: 75%" routerLink="/search_symptom">
               <i class="anticon anticon-right"></i>

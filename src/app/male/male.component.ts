@@ -37,14 +37,16 @@ export class MaleComponent implements OnInit {
       const id = ele["id"];
       if( this.side == 0){
         let part = this.frt[id.split("_")[1]-1];
-        console.log(part);
-        this.parts.push(part);
+        // console.log(part);
+        // this.parts.push(part);
+        this.selectedParts.emit(part);
       }else {
         let part = this.bck[id.split("_")[1]-1];
-        console.log(part);
-        this.parts.push(part);
+        // console.log(part);
+        // this.parts.push(part);
+        this.selectedParts.emit(part);
       }
-      this.selectedParts.emit(this.dedupe(this.parts));
+      // this.selectedParts.emit(this.dedupe(this.parts));
       // console.log(id);
     });
 
