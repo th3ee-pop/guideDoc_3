@@ -41,11 +41,10 @@ export class HttpService {
       .do((res) => console.log(res));
   }
 
-  getDisease(ID: Array<string>): Observable<any> {
+  getDisease(ID: Array<string>, NotID: Array<string>): Observable<any> {
     const str = JSON.stringify({
       'Ids': ID,
-      'NotIds': [],
-      'UnknownIds': []
+      'NotIds': NotID
     });
     return this.http.get(this.baseUrl + 'getSymDis/?q=' + str)
       .do((res) => console.log(res));
