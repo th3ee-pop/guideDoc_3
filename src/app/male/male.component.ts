@@ -23,14 +23,16 @@ export class MaleComponent implements OnInit {
   constructor( private elementRef: ElementRef ) { }
 
   ngOnInit(){
-    // console.log(this.frt);
-    // console.log(this.bck);
     this.addClick();
   }
 
   addClick(){
     let els = this.elementRef.nativeElement.querySelectorAll('path');
     els.forEach((ele)=>{
+      ele['style'].fill = 'red';
+      ele['style']['fill-opacity'] = 0;
+      ele['style']['stroke'] = 'red';
+      ele['style']['stroke-opacity'] = 0.5;
       ele.addEventListener('click',()=> {
       const id = ele["id"];
       if( this.side == 0){
@@ -44,7 +46,32 @@ export class MaleComponent implements OnInit {
       }
       this.selectedParts.emit(this.dedupe(this.parts));
       // console.log(id);
-    })
+    });
+
+      ele.addEventListener('mouseenter',()=> {
+        ele['style'].fill = '#FF0000';
+        ele['style']['fill-opacity'] = 0.3;
+        ele['style']['stroke'] = '#FF0000';
+        ele['style']['stroke-opacity'] = 1;
+      });
+      ele.addEventListener('mousedown',()=>{
+        ele['style'].fill = '#993366';
+        ele['style']['fill-opacity'] = 0.7;
+        ele['style']['stroke'] = '#993366';
+        ele['style']['stroke-opacity'] = 1;
+      });
+      ele.addEventListener('mouseup',()=>{
+        ele['style'].fill = '#FF0000';
+        ele['style']['fill-opacity'] = 0.3;
+        ele['style']['stroke'] = '#FF0000';
+        ele['style']['stroke-opacity'] = 1;
+      });
+      ele.addEventListener('mouseleave',()=>{
+        ele['style'].fill = 'red';
+        ele['style']['fill-opacity'] = 0;
+        ele['style']['stroke'] = 'red';
+        ele['style']['stroke-opacity'] = 0.5;
+      })
   })
   }
 
