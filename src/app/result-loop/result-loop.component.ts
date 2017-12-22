@@ -19,50 +19,27 @@ export class ResultLoopComponent implements OnInit {
   probableSymptom: Array<any>;
   selectedSym = [];
   notSym = [];
-  data = [
-    {
-      key    : '1',
-      name   : '高血压',
-      age    : '心血管内科',
-      address: 'New York No. 1 Lake Park',
-    }, {
-      key    : '2',
-      name   : '血栓',
-      age    : '心血管内科',
-      address: 'London No. 1 Lake Park',
-    }, {
-      key    : '3',
-      name   : '血管炎',
-      age    : '心血管内科',
-      address: 'Sidney No. 1 Lake Park',
-    }
-  ];
+  disLoading = true;
+  depLoading = true;
+
   constructor( public httpService: HttpService, private modalService: NzModalService) {
   }
 
   ngOnInit() {
-   // console.log(this.mainSym);
-    // console.log(this.httpService.searchPart.Name);
-  //  this.selectedSym.push(this.httpService.searchPart.Name);
     this.selectedSym.push(
       {
         name: sessionStorage.getItem('search_part_name'),
         id: sessionStorage.getItem('search_part_id')
       }
       );
-    for (let i = 0; i < 20; i++) {
-      this.list.push({
-        key: i.toString(),
-        title: `content${i + 1}`,
-        description: `description of content${i + 1}`,
-        direction: Math.random() * 2 > 1 ? 'right' : ''
-      });
-    }
+
     this.httpService.getDisease([sessionStorage.getItem('search_part_id')], []).subscribe((res) => {
       console.log(res);
       this.probableDisease = res.Results.PosDis;
       this.probableSymptom = res.Results.PosSym;
       console.log(res.Results.PosDep);
+      this.disLoading = false;
+      this.depLoading = false;
       for (const key in res.Results.PosDep) {
         console.log(key);
         this.probableDepartment.push(res.Results.PosDep[key]);
@@ -85,7 +62,7 @@ export class ResultLoopComponent implements OnInit {
         further_symptoms: this.probableSymptom,
       }
     });
-    subscription.subscribe(res => {
+    subscription.subscribe((res: any) => {
       console.log(res);
       if (res.HaveSym || res.NotSym) {
         const HaveSym = res.HaveSym;
@@ -108,7 +85,11 @@ export class ResultLoopComponent implements OnInit {
     });
   }
   getDisease(Sym: Array<any>, notSym: Array<any>) {
+    this.disLoading = true;
+    this.depLoading = true;
     this.httpService.getDisease(Sym, notSym).subscribe(res => {
+      this.disLoading = false;
+      this.depLoading = false;
       console.log(res);
       this.probableDisease = res.Results.PosDis;
       this.probableSymptom = res.Results.PosSym;
