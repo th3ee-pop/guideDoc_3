@@ -35,22 +35,53 @@
       <br>
       <br>
       <div nz-row>
-        <div nz-col [nzSpan]="6">
-
+        <div nz-row>
+          <div nz-col [nzSpan]="6"></div>
+          <div nz-col [nzSpan]="12">
+            <div nz-row [nzType]="'flex'" [nzJustify]="'center'">
+              <nz-button-group >
+                <button  (click)="changeSex(0)" nz-button [nzType]="'primary'">
+                  <!--<i class=" anticon anticon-left"></i>-->
+                  <span>男性</span>
+                </button>
+                <button  (click)="changeSex(1)" nz-button [nzType]="'primary'">
+                  <span>女性</span>
+                  <!--<i class=" anticon anticon-right"></i>-->
+                </button>
+              </nz-button-group>
+            </div>
+          </div>
+          <div nz-col [nzSpan]="6"></div>
         </div>
-        <div nz-col [nzSpan]="12">
-
-
+        <app-male [sex]="sex" [side]="side" (selectedParts)="getParts($event)"></app-male>
+        <div nz-row>
+          <div nz-col [nzSpan]="6"></div>
+          <div nz-col [nzSpan]="12">
+            <div nz-row [nzType]="'flex'" [nzJustify]="'center'">
+              <nz-button-group>
+                <button (click)="changeSide(0)" nz-button [nzType]="'primary'">
+                  <i class=" anticon anticon-left"></i>
+                  <span>正面</span>
+                </button>
+                <button (click)="changeSide(1)" nz-button [nzType]="'primary'">
+                  <span>背面</span>
+                  <i class=" anticon anticon-right"></i>
+                </button>
+              </nz-button-group>
+            </div>
+          </div>
+          <div nz-col [nzSpan]="6"></div>
+        </div>
           <div nz-row>
             <button nz-button [nzType]="'default'" style="left: 75%" routerLink="/search_symptom">
               <i class="anticon anticon-right"></i>
               下一步
             </button>
           </div>
-        </div>
-        <div nz-col [nzSpan]="6">
+        <!--</div>-->
+        <!--<div nz-col [nzSpan]="6">-->
 
-        </div>
+        <!--</div>-->
       </div>
     </div>
   </nz-content>

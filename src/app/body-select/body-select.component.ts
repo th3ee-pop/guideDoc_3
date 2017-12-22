@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BodySelectComponent implements OnInit {
 
+  sex = 0 ;
+  side = 0 ;
   list: any[] = [];
   title = 'app';
   current = 0;
@@ -56,5 +58,15 @@ export class BodySelectComponent implements OnInit {
 
   change(ret: any) {
     console.log('nzChange', ret);
+  }
+
+  changeSex(num){
+    this.sex = num;
+  }
+  changeSide(num){
+    this.side = num
+  }
+  getParts(event:any){
+    console.log(event);
   }
 }
