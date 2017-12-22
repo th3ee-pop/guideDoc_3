@@ -61,7 +61,8 @@ export class SearchSymptomComponent implements OnInit {
   selectSymptom(symptom: any) {
     console.log(symptom);
     this.httpService.searchPart = symptom;
-    sessionStorage.setItem('search_part', symptom);
+    sessionStorage.setItem('search_part_name', symptom.Name);
+    sessionStorage.setItem('search_part_id', symptom.Id);
     this.router.navigate(['/result_loop']);
   }
 

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../http-service/http-service';
+import { NzModalService } from 'ng-zorro-antd';
+import { LoopModalComponent } from './loop-modal/loop-modal.component';
 
 @Component({
   selector: 'app-result-loop',
@@ -14,7 +16,9 @@ export class ResultLoopComponent implements OnInit {
   _value: string;
   probableDisease: Array<any>;
   probableDepartment= [];
+  probableSymptom: Array<any>;
   selectedSym = [];
+  notSym = [];
   data = [
     {
       key    : '1',
@@ -33,13 +37,19 @@ export class ResultLoopComponent implements OnInit {
       address: 'Sidney No. 1 Lake Park',
     }
   ];
-  constructor( public httpService: HttpService) {
+  constructor( public httpService: HttpService, private modalService: NzModalService) {
   }
 
   ngOnInit() {
-    console.log(this.httpService.searchPart.Name);
-    this.selectedSym.push(this.httpService.searchPart.Name);
-    console.log(sessionStorage.getItem('search_part'));
+   // console.log(this.mainSym);
+    // console.log(this.httpService.searchPart.Name);
+  //  this.selectedSym.push(this.httpService.searchPart.Name);
+    this.selectedSym.push(
+      {
+        name: sessionStorage.getItem('search_part_name'),
+        id: sessionStorage.getItem('search_part_id')
+      }
+      );
     for (let i = 0; i < 20; i++) {
       this.list.push({
         key: i.toString(),
@@ -48,9 +58,10 @@ export class ResultLoopComponent implements OnInit {
         direction: Math.random() * 2 > 1 ? 'right' : ''
       });
     }
-    this.httpService.getDisease([this.httpService.searchPart.Id]).subscribe((res) => {
+    this.httpService.getDisease([sessionStorage.getItem('search_part_id')], []).subscribe((res) => {
       console.log(res);
       this.probableDisease = res.Results.PosDis;
+      this.probableSymptom = res.Results.PosSym;
       console.log(res.Results.PosDep);
       for (const key in res.Results.PosDep) {
         console.log(key);
@@ -58,6 +69,74 @@ export class ResultLoopComponent implements OnInit {
       }
       console.log(this.probableDepartment);
     });
+  }
+  showLoopModal() {
+    const subscription = this.modalService.open({
+      title: '并发症情况',
+      content: LoopModalComponent,
+      onOk() {
+      },
+      onCancel() {
+        console.log('Click cancel');
+      },
+      footer: false,
+      componentParams: {
+        name: '测试渲染',
+        further_symptoms: this.probableSymptom,
+      }
+    });
+    subscription.subscribe(res => {
+      console.log(res);
+      if (res.HaveSym || res.NotSym) {
+        const HaveSym = res.HaveSym;
+        const NotSym = res.NotSym;
+        const HaveSymId = [];
+        const NotHaveSymId = [];
+        console.log(HaveSym);
+        for (const item of HaveSym) {
+          this.selectedSym.push(item);
+        }
+        for (const item of this.selectedSym) {
+          HaveSymId.push(item.id);
+        }
+        for (const item of NotSym) {
+          this.notSym.push(item);
+          NotHaveSymId.push(item.id);
+        }
+        this.getDisease(HaveSymId, NotHaveSymId);
+      }
+    });
+  }
+  getDisease(Sym: Array<any>, notSym: Array<any>) {
+    this.httpService.getDisease(Sym, notSym).subscribe(res => {
+      console.log(res);
+      this.probableDisease = res.Results.PosDis;
+      this.probableSymptom = res.Results.PosSym;
+      this.probableDepartment = [];
+      console.log(res.Results.PosDep);
+      for (const key in res.Results.PosDep) {
+        console.log(key);
+        this.probableDepartment.push(res.Results.PosDep[key]);
+      }
+      console.log(this.probableDepartment);
+    });
+  }
+
+  handleClose(item) {
+    const HaveSymId = [];
+    const NotHaveSymId = [];
+    for (let i = 0; i < this.selectedSym.length; i++) {
+      if (this.selectedSym[i].id === item.id) {
+        this.selectedSym.splice(i, 1);
+      }
+    }
+    for (const sym of this.selectedSym) {
+      HaveSymId.push(sym.id);
+    }
+    for (const sym of this.notSym) {
+      NotHaveSymId.push(sym.id);
+    }
+    this.getDisease(HaveSymId, NotHaveSymId);
   }
 
   filterOption(inputValue, option) {

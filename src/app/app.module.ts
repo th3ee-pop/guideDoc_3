@@ -11,6 +11,7 @@ import { BodySelectComponent } from './body-select/body-select.component';
 import { SearchSymptomComponent } from './search-symptom/search-symptom.component';
 import { ResultLoopComponent } from './result-loop/result-loop.component';
 import { HttpService } from './http-service/http-service';
+import { LoopModalComponent } from './result-loop/loop-modal/loop-modal.component';
 
 const appRoutes: Routes = [
   {path: '', component: AppComponent, children: [
@@ -27,7 +28,8 @@ const appRoutes: Routes = [
     AppComponent,
     BodySelectComponent,
     SearchSymptomComponent,
-    ResultLoopComponent
+    ResultLoopComponent,
+    LoopModalComponent
   ],
   imports: [
     BrowserModule,
@@ -40,6 +42,7 @@ const appRoutes: Routes = [
     )
   ],
   providers: [HttpService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [LoopModalComponent]
 })
 export class AppModule { }
