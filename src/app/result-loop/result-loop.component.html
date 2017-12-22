@@ -63,7 +63,10 @@
                可能疾病
              </h2>
              <br>
-             <div class="height-300">
+             <div class="example" *ngIf="disLoading">
+               <nz-spin [nzTip]="'正在读取数据...'"></nz-spin>
+             </div>
+             <div class="height-300" *ngIf="!disLoading">
                <nz-tag style="margin-bottom: 1%" [nzColor]="'red'" *ngFor="let dis of probableDisease">
                  {{dis.Name}}
                </nz-tag>
@@ -75,7 +78,10 @@
                相关科室
              </h2>
              <br>
-             <div class="height-300">
+             <div class="example" *ngIf="depLoading">
+               <nz-spin [nzTip]="'正在读取数据...'"></nz-spin>
+             </div>
+             <div class="height-300" *ngIf="!depLoading">
                <nz-tag style="margin-bottom: 1%" [nzColor]="'cyan'" *ngFor="let dep of probableDepartment">
                  {{dep.Name}}
                </nz-tag>

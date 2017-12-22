@@ -55,7 +55,11 @@
               <i class="anticon anticon-left"></i>
               上一步
             </button>
-            <button nz-button [nzType]="'default'" style="left: 70%" routerLink="../result_loop">
+            <button *ngIf="hasSym" nz-button [nzType]="'default'" style="left: 70%" routerLink="../result_loop">
+              <i class="anticon anticon-right"></i>
+              下一步
+            </button>
+            <button *ngIf="!hasSym" disabled nz-button [nzType]="'default'" style="left: 70%" routerLink="../result_loop">
               <i class="anticon anticon-right"></i>
               下一步
             </button>

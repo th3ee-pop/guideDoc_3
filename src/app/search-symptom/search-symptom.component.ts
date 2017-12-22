@@ -14,6 +14,7 @@ export class SearchSymptomComponent implements OnInit {
   current = 1;
   _value: string;
   Symptomes: Array<any>;
+  hasSym = sessionStorage.getItem('search_part_id');
   data = [
     {
       key    : '1',
@@ -44,7 +45,7 @@ export class SearchSymptomComponent implements OnInit {
       });
     }
     console.log(this.list);
-    this.httpService.getSymptoms('烧').subscribe((res) => {
+    this.httpService.getSymptoms('').subscribe((res) => {
       console.log(res);
       this.Symptomes = res.Results;
       console.log(this.Symptomes);
