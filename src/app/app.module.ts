@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { LocationStrategy, HashLocationStrategy} from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -41,7 +42,7 @@ const appRoutes: Routes = [
       appRoutes
     )
   ],
-  providers: [HttpService],
+  providers: [HttpService, {provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent],
   entryComponents: [LoopModalComponent]
 })
