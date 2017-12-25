@@ -8,6 +8,28 @@ import {HttpService} from "../http-service/http-service";
 })
 export class BodySelectComponent implements OnInit {
 
+  dic =
+{
+  "男性股沟": "bp20600",
+  "全身": "bp12300",
+  "背部": "bp25600",
+  "胸部": "bp25800",
+  "心理": "bp17900",
+  "女性生殖": "bp15700",
+  "会阴部": "bp11900",
+  "臀部": "bp28200",
+  "腰部": "bp27300",
+  "下肢": "bp10600",
+  "盆腔": "bp21200",
+  "上肢": "bp10200",
+  "骨": "bp30900",
+  "其他": "bp12400",
+  "颈部": "bp30500",
+  "男性生殖": "bp20500",
+  "头部": "bp15500",
+  "腹部": "bp27700"
+};
+
   sex = 0 ;
   side = 0 ;
   part='全身';
@@ -18,15 +40,7 @@ export class BodySelectComponent implements OnInit {
   data ;
   constructor(public httpService: HttpService){}
   ngOnInit() {
-    const params = {
-      "Name":"",
-      "Body":"bp15500",
-      "Gender":"F"
-    };
-    // this.httpService.getSymptomsByBodyParts(params).subscribe((res)=> {
-    //   console.log("work!");
-    //   console.log(res);
-    // });
+
   }
 
   filterOption(inputValue, option) {
@@ -54,9 +68,21 @@ export class BodySelectComponent implements OnInit {
   getParts(event:any){
     console.log(event);
     this.part = event;
-    this.httpService.getSymptoms("头疼").subscribe((res)=>{
-      console.log(res);
+
+    const params = {
+      "Name":"",
+      "Body":this.dic[this.part],
+      "Gender":"F"
+    };
+    console.log(params);
+    this.httpService.getSymptomsByBodyParts(params).subscribe((res)=> {
+      console.log("work!");
       this.data = res.Results;
-    })
+    });
+
+    // this.httpService.getSymptoms("头疼").subscribe((res)=>{
+    //   console.log(res);
+    //   this.data = res.Results;
+    // })
   }
 }
