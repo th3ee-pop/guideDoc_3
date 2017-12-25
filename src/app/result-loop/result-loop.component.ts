@@ -140,12 +140,29 @@ export class ResultLoopComponent implements OnInit {
     });
   }
 
-  handleClose(item) {
+  hashandleClose(item) {
     const HaveSymId = [];
     const NotHaveSymId = [];
     for (let i = 0; i < this.selectedSym.length; i++) {
       if (this.selectedSym[i].id === item.id) {
         this.selectedSym.splice(i, 1);
+      }
+    }
+    for (const sym of this.selectedSym) {
+      HaveSymId.push(sym.id);
+    }
+    for (const sym of this.notSym) {
+      NotHaveSymId.push(sym.id);
+    }
+    this.getDisease(HaveSymId, NotHaveSymId);
+  }
+
+  nothandleClose(item) {
+    const HaveSymId = [];
+    const NotHaveSymId = [];
+    for (let i = 0; i < this.notSym.length; i++) {
+      if (this.notSym[i].id === item.id) {
+        this.notSym.splice(i, 1);
       }
     }
     for (const sym of this.selectedSym) {

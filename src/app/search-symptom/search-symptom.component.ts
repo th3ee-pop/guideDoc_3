@@ -28,7 +28,7 @@ export class SearchSymptomComponent implements OnInit {
       });
     }
     console.log(this.list);
-    this.httpService.getSymptoms('').subscribe((res) => {
+    this.httpService.getSymptoms('a').subscribe((res) => {
       console.log(res);
       this.Symptomes = res.Results;
       console.log(this.Symptomes);

@@ -48,12 +48,25 @@
               <br>
               <div nz-row>
                 <div class="height-300">
-                  <nz-tag nzClosable  *ngFor="let sym of selectedSym" (nzClose)="handleClose(sym)" style="margin-bottom: 1%">
+                  <nz-tag nzClosable  *ngFor="let sym of selectedSym" (nzClose)="hashandleClose(sym)" style="margin-bottom: 1%">
                     {{sym.name}}
                   </nz-tag>
                   <button nz-button
                           [nzSize]="'small'" [nzType]="'dashed'" (click)="showLoopModal()"
                           >+ 添加并发症</button>
+                </div>
+              </div>
+              <br>
+              <br>
+              <h2 class="left" *ngIf="notSym.length > 0">
+                不存在的症状
+              </h2>
+              <br>
+              <div nz-row *ngIf="notSym.length > 0">
+                <div class="height-300">
+                  <nz-tag nzClosable  *ngFor="let sym of notSym" (nzClose)="nothandleClose(sym)" style="margin-bottom: 1%">
+                    {{sym.name}}
+                  </nz-tag>
                 </div>
               </div>
             </div>
