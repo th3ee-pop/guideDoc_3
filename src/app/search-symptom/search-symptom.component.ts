@@ -12,27 +12,10 @@ export class SearchSymptomComponent implements OnInit {
   list: any[] = [];
   title = 'app';
   current = 1;
-  _value: string;
+  _value= '';
   Symptomes: Array<any>;
   hasSym = sessionStorage.getItem('search_part_id');
-  data = [
-    {
-      key    : '1',
-      name   : '高血压',
-      age    : '心血管内科',
-      address: 'New York No. 1 Lake Park',
-    }, {
-      key    : '2',
-      name   : '血栓',
-      age    : '心血管内科',
-      address: 'London No. 1 Lake Park',
-    }, {
-      key    : '3',
-      name   : '血管炎',
-      age    : '心血管内科',
-      address: 'Sidney No. 1 Lake Park',
-    }
-  ];
+
   constructor(public httpService: HttpService, private router: Router) {
   }
   ngOnInit() {

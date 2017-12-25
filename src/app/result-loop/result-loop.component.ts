@@ -17,6 +17,8 @@ export class ResultLoopComponent implements OnInit {
   probableDisease: Array<any>;
   probableDepartment= [];
   probableSymptom: Array<any>;
+  originalDepartment: Array<any>;
+  resDep: any;
   selectedSym = [];
   notSym = [];
   disLoading = true;
@@ -35,7 +37,9 @@ export class ResultLoopComponent implements OnInit {
 
     this.httpService.getDisease([sessionStorage.getItem('search_part_id')], []).subscribe((res) => {
       console.log(res);
+      this.resDep = res.Results.PosDep;
       this.probableDisease = res.Results.PosDis;
+      this.switchToCheckable(this.probableDisease);
       this.probableSymptom = res.Results.PosSym;
       console.log(res.Results.PosDep);
       this.disLoading = false;
@@ -45,7 +49,33 @@ export class ResultLoopComponent implements OnInit {
         this.probableDepartment.push(res.Results.PosDep[key]);
       }
       console.log(this.probableDepartment);
+      this.originalDepartment = this.probableDepartment;
     });
+  }
+  switchToCheckable(DisArray: Array<any>) {
+    DisArray.forEach((d) => {
+      d.checked = false;
+    });
+  }
+  handleCheckChange(checked: boolean, item: any): void {
+    item.checked = checked;
+    this.probableDisease.forEach((d) => {
+      if (d.Name === item.Name) {
+        if (item.checked) {
+          const newDep = [];
+          item.department.forEach((p) => {
+            newDep.push(this.resDep[p]);
+          });
+          console.log(newDep);
+          this.probableDepartment = newDep;
+        } else {
+          this.probableDepartment = this.originalDepartment;
+        }
+      } else {
+        d.checked = false;
+      }
+    });
+    console.log('hello');
   }
   showLoopModal() {
     const subscription = this.modalService.open({
@@ -83,6 +113,13 @@ export class ResultLoopComponent implements OnInit {
         this.getDisease(HaveSymId, NotHaveSymId);
       }
     });
+  }
+  getDepartment(Id: string) {
+    for (const item of this.probableDepartment) {
+      if (item.ID === Id) {
+        return item;
+      }
+    }
   }
   getDisease(Sym: Array<any>, notSym: Array<any>) {
     this.disLoading = true;

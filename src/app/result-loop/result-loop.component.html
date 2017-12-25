@@ -67,9 +67,9 @@
                <nz-spin [nzTip]="'正在读取数据...'"></nz-spin>
              </div>
              <div class="height-300" *ngIf="!disLoading">
-               <nz-tag style="margin-bottom: 1%" [nzColor]="'red'" *ngFor="let dis of probableDisease">
+               <nz-checkable-tag style="margin-bottom: 1%"  *ngFor="let dis of probableDisease" [nzChecked]="dis.checked" (nzChange)="handleCheckChange($event, dis)">
                  {{dis.Name}}
-               </nz-tag>
+               </nz-checkable-tag>
              </div>
            </div>
            <div nz-row>
@@ -82,9 +82,9 @@
                <nz-spin [nzTip]="'正在读取数据...'"></nz-spin>
              </div>
              <div class="height-300" *ngIf="!depLoading">
-               <nz-tag style="margin-bottom: 1%" [nzColor]="'cyan'" *ngFor="let dep of probableDepartment">
+               <nz-checkable-tag  style="margin-bottom: 1%" [nzColor]="'cyan'" *ngFor="let dep of probableDepartment">
                  {{dep.Name}}
-               </nz-tag>
+               </nz-checkable-tag>
              </div>
            </div>
           <br>
