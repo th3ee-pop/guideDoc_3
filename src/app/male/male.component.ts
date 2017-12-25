@@ -32,7 +32,8 @@ export class MaleComponent implements OnInit {
       ele['style'].fill = 'red';
       ele['style']['fill-opacity'] = 0;
       ele['style']['stroke'] = 'red';
-      ele['style']['stroke-opacity'] = 0.5;
+      ele['style']['stroke-opacity'] = 1;
+      ele['style']['stroke-width'] = 2;
       ele.addEventListener('click',()=> {
       const id = ele["id"];
       if( this.side == 0){
@@ -72,7 +73,7 @@ export class MaleComponent implements OnInit {
         ele['style'].fill = 'red';
         ele['style']['fill-opacity'] = 0;
         ele['style']['stroke'] = 'red';
-        ele['style']['stroke-opacity'] = 0.5;
+        ele['style']['stroke-opacity'] = 1;
       })
   })
   }

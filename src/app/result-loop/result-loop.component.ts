@@ -23,6 +23,7 @@ export class ResultLoopComponent implements OnInit {
   notSym = [];
   disLoading = true;
   depLoading = true;
+  gender = 'M';
 
   constructor( public httpService: HttpService, private modalService: NzModalService) {
   }
@@ -32,10 +33,12 @@ export class ResultLoopComponent implements OnInit {
       {
         name: sessionStorage.getItem('search_part_name'),
         id: sessionStorage.getItem('search_part_id')
-      }
-      );
+      });
+    if (sessionStorage.getItem('Gender')) {
+      this.gender = sessionStorage.getItem('Gender');
+    }
 
-    this.httpService.getDisease([sessionStorage.getItem('search_part_id')], []).subscribe((res) => {
+    this.httpService.getDisease([sessionStorage.getItem('search_part_id')], [], this.gender).subscribe((res) => {
       console.log(res);
       this.resDep = res.Results.PosDep;
       this.probableDisease = res.Results.PosDis;
@@ -114,17 +117,11 @@ export class ResultLoopComponent implements OnInit {
       }
     });
   }
-  getDepartment(Id: string) {
-    for (const item of this.probableDepartment) {
-      if (item.ID === Id) {
-        return item;
-      }
-    }
-  }
+
   getDisease(Sym: Array<any>, notSym: Array<any>) {
     this.disLoading = true;
     this.depLoading = true;
-    this.httpService.getDisease(Sym, notSym).subscribe(res => {
+    this.httpService.getDisease(Sym, notSym, this.gender).subscribe(res => {
       this.disLoading = false;
       this.depLoading = false;
       console.log(res);

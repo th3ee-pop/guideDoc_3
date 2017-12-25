@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {HttpService} from "../http-service/http-service";
+import { HttpService } from '../http-service/http-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-body-select',
@@ -32,13 +33,14 @@ export class BodySelectComponent implements OnInit {
 
   sex = 0 ;
   side = 0 ;
-  part='全身';
+  part= '全身';
   list: any[] = [];
   title = 'app';
   current = 0;
   _value: string;
   data ;
-  constructor(public httpService: HttpService){}
+  constructor(public httpService: HttpService, private router: Router) {
+  }
   ngOnInit() {
 
   }
@@ -59,24 +61,32 @@ export class BodySelectComponent implements OnInit {
     console.log('nzChange', ret);
   }
 
-  changeSex(num){
+  changeSex(num) {
     this.sex = num;
   }
-  changeSide(num){
-    this.side = num
+  changeSide(num) {
+    this.side = num;
   }
-  getParts(event:any){
+  getParts(event: any) {
     this.part = event;
-    const gender = (this.sex == 0)?'M':'F';
+    const gender = (this.sex === 0) ? 'M' : 'F';
+    sessionStorage.setItem('Gender', gender);
     const params = {
-      "Name":"",
-      "Body":this.dic[this.part],
-      "Gender":gender
+      'Name': '',
+      'Body': this.dic[this.part],
+      'Gender': gender
     };
     console.log(params);
-    this.httpService.getSymptomsByBodyParts(params).subscribe((res)=> {
+    this.httpService.getSymptomsByBodyParts(params).subscribe((res) => {
       this.data = res.Results;
     });
 
+  }
+  selectSymptom(symptom: any) {
+    console.log(symptom);
+    this.httpService.searchPart = symptom;
+    sessionStorage.setItem('search_part_name', symptom.Name);
+    sessionStorage.setItem('search_part_id', symptom.Id);
+    this.router.navigate(['/result_loop']);
   }
 }

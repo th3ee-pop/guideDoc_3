@@ -84,7 +84,7 @@
           </h2>
           <br>
           <div class="height-300">
-            <nz-tag style="margin-bottom: 1%" [nzColor]="'cyan'" *ngFor="let dep of data">
+            <nz-tag style="margin-bottom: 1%" [nzColor]="'cyan'" *ngFor="let dep of data" (click)="selectSymptom(dep)">
               {{dep.Name}}
             </nz-tag>
           </div>
