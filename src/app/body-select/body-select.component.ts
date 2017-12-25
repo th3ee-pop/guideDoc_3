@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {HttpService} from "../http-service/http-service";
 
 @Component({
   selector: 'app-body-select',
@@ -7,41 +8,39 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BodySelectComponent implements OnInit {
 
+  dic =
+{
+  "男性股沟": "bp20600",
+  "全身": "bp12300",
+  "背部": "bp25600",
+  "胸部": "bp25800",
+  "心理": "bp17900",
+  "女性生殖": "bp15700",
+  "会阴部": "bp11900",
+  "臀部": "bp28200",
+  "腰部": "bp27300",
+  "下肢": "bp10600",
+  "盆腔": "bp21200",
+  "上肢": "bp10200",
+  "骨": "bp30900",
+  "其他": "bp12400",
+  "颈部": "bp30500",
+  "男性生殖": "bp20500",
+  "头部": "bp15500",
+  "腹部": "bp27700"
+};
+
   sex = 0 ;
   side = 0 ;
+  part='全身';
   list: any[] = [];
   title = 'app';
   current = 0;
   _value: string;
-  data = [
-    {
-      key    : '1',
-      name   : '高血压',
-      age    : '心血管内科',
-      address: 'New York No. 1 Lake Park',
-    }, {
-      key    : '2',
-      name   : '血栓',
-      age    : '心血管内科',
-      address: 'London No. 1 Lake Park',
-    }, {
-      key    : '3',
-      name   : '血管炎',
-      age    : '心血管内科',
-      address: 'Sidney No. 1 Lake Park',
-    }
-  ];
-
+  data ;
+  constructor(public httpService: HttpService){}
   ngOnInit() {
-    for (let i = 0; i < 20; i++) {
-      this.list.push({
-        key: i.toString(),
-        title: `content${i + 1}`,
-        description: `description of content${i + 1}`,
-        direction: Math.random() * 2 > 1 ? 'right' : ''
-      });
-    }
-    console.log(this.list);
+
   }
 
   filterOption(inputValue, option) {
@@ -67,6 +66,17 @@ export class BodySelectComponent implements OnInit {
     this.side = num
   }
   getParts(event:any){
-    console.log(event);
+    this.part = event;
+    const gender = (this.sex == 0)?'M':'F';
+    const params = {
+      "Name":"",
+      "Body":this.dic[this.part],
+      "Gender":gender
+    };
+    console.log(params);
+    this.httpService.getSymptomsByBodyParts(params).subscribe((res)=> {
+      this.data = res.Results;
+    });
+
   }
 }

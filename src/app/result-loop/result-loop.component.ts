@@ -139,7 +139,6 @@ export class ResultLoopComponent implements OnInit {
       console.log(this.probableDepartment);
     });
   }
-
   hashandleClose(item) {
     const HaveSymId = [];
     const NotHaveSymId = [];
@@ -173,6 +172,7 @@ export class ResultLoopComponent implements OnInit {
     }
     this.getDisease(HaveSymId, NotHaveSymId);
   }
+
 
   filterOption(inputValue, option) {
     return option.description.indexOf(inputValue) > -1;

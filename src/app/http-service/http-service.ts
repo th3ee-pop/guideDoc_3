@@ -5,6 +5,7 @@ import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import { Injectable, Injector } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
+import {extractStyleParams} from "@angular/animations/browser/src/util";
 
 @Injectable()
 
@@ -32,6 +33,12 @@ export class HttpService {
     console.log(this.getParams({'Name': params}));
     return this.http.get(this.baseUrl + 'getSymId/?q=' + '{"Name":%22' + params + '%22}')
       .do((res) => console.log(res));
+  };
+
+  getSymptomsByBodyParts(params: any): Observable<any> {
+    console.log(this.getParams(params));
+    return this.http.get('http://202.117.54.95:9500/sysptom/getsymptom/?'+this.getParams(params))
+      .do((res) => console.log(res));
   }
 
   getDisease(ID: Array<string>, NotID: Array<string>): Observable<any> {
@@ -42,6 +49,5 @@ export class HttpService {
     return this.http.get(this.baseUrl + 'get_symptom_disease/?q=' + str)
       .do((res) => console.log(res));
   }
-
 
 }
