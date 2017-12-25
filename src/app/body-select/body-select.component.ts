@@ -66,23 +66,17 @@ export class BodySelectComponent implements OnInit {
     this.side = num
   }
   getParts(event:any){
-    console.log(event);
     this.part = event;
-
+    const gender = (this.sex == 0)?'M':'F';
     const params = {
       "Name":"",
       "Body":this.dic[this.part],
-      "Gender":"F"
+      "Gender":gender
     };
     console.log(params);
     this.httpService.getSymptomsByBodyParts(params).subscribe((res)=> {
-      console.log("work!");
       this.data = res.Results;
     });
 
-    // this.httpService.getSymptoms("头疼").subscribe((res)=>{
-    //   console.log(res);
-    //   this.data = res.Results;
-    // })
   }
 }
