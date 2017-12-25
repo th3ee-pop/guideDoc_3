@@ -10,7 +10,7 @@ import 'rxjs/add/operator/do';
 
 export class HttpService {
   searchPart: any;
-  baseUrl = 'http://59.110.52.133:9999/kgInterface/';
+  baseUrl = 'http://59.110.52.133:9501/kgInterface/';
   constructor(
     private http: HttpClient,
     private injector: Injector
@@ -39,7 +39,7 @@ export class HttpService {
       'Ids': ID,
       'NotIds': NotID
     });
-    return this.http.get(this.baseUrl + 'getSymDis/?q=' + str)
+    return this.http.get(this.baseUrl + 'get_symptom_disease/?q=' + str)
       .do((res) => console.log(res));
   }
 
