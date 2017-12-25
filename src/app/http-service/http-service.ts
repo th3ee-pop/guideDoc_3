@@ -37,7 +37,7 @@ export class HttpService {
 
   getSymptomsByBodyParts(params: any): Observable<any> {
     console.log(this.getParams(params));
-    return this.http.get('http://202.117.54.95:9500/sysptom/getsymptom/?' + this.getParams(params))
+    return this.http.get('http://59.110.52.133:9501/kgInterface/getSymId/?' + this.getParams(params))
       .do((res) => console.log(res));
   }
 
