@@ -50,5 +50,4 @@ export class HttpService {
     return this.http.get(this.baseUrl + 'get_symptom_disease/?q=' + str)
       .do((res) => console.log(res));
   }
-
 }
