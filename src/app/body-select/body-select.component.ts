@@ -128,6 +128,7 @@ export class BodySelectComponent implements OnInit {
       gender = sessionStorage.getItem('Gender');
     } else {
       gender = 'm';
+      sessionStorage.setItem('Gender', 'm');
     }
     this.part = this.dic[gender][event];
     sessionStorage.setItem('part', event);
