@@ -14,9 +14,12 @@ export class MaleComponent implements OnInit {
 
   frt_male = new parts().frt_male;
   frt_female = new parts().frt_female;
-  bck_parts = new parts().bck;
-  frt = this.frt_male.concat(this.frt_female);
-  bck = this.bck_parts.concat(this.bck_parts);
+  frt_child = new parts().frt_child;
+  bck_male = new parts().bck_male;
+  bck_female = new parts().bck_female;
+  bck_child = new parts().bck_child;
+  frt = this.frt_male.concat(this.frt_female).concat(this.frt_child);
+  bck = this.bck_male.concat(this.bck_female).concat(this.bck_child);
 
   parts=[];
 
@@ -47,9 +50,9 @@ export class MaleComponent implements OnInit {
         // this.parts.push(part);
         this.selectedParts.emit(part);
       }
-      // this.selectedParts.emit(this.dedupe(this.parts));
-      // console.log(id);
-    });
+        // this.selectedParts.emit(this.dedupe(this.parts));
+        // console.log(id);
+      });
 
       ele.addEventListener('mouseenter',()=> {
         ele['style'].fill = '#FF0000';

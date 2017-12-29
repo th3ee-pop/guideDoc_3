@@ -42,6 +42,10 @@
                   <span>女性</span>
                   <!--<i class=" anticon anticon-right"></i>-->
                 </button>
+                <button  (click)="changeSex(2)" nz-button [nzType]="'primary'">
+                  <span>儿童</span>
+                  <!--<i class=" anticon anticon-right"></i>-->
+                </button>
               </nz-button-group>
             </div>
           </div>
@@ -79,15 +83,15 @@
                 </nz-tag>
               </div>
           <br>
-          <h2>
-            相关症状
-          </h2>
-          <br>
-          <div class="height-300">
-            <nz-tag style="margin-bottom: 1%" [nzColor]="'cyan'" *ngFor="let dep of data" (click)="selectSymptom(dep)">
-              {{dep.Name}}
-            </nz-tag>
-          </div>
+          <!--<h2>-->
+            <!--相关症状-->
+          <!--</h2>-->
+          <!--<br>-->
+          <!--<div class="height-300">-->
+            <!--<nz-tag style="margin-bottom: 1%" [nzColor]="'cyan'" *ngFor="let dep of data" (click)="selectSymptom(dep)">-->
+              <!--{{dep.Name}}-->
+            <!--</nz-tag>-->
+          <!--</div>-->
             </div>
             <div nz-col [nzSpan]="6"></div>
         </div>

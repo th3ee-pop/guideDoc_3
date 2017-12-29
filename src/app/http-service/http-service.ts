@@ -11,7 +11,7 @@ import {extractStyleParams} from '@angular/animations/browser/src/util';
 
 export class HttpService {
   searchPart: any;
-  baseUrl = 'http://59.110.52.133:9501/kgInterface/';
+  baseUrl = 'http://202.117.54.95:8000/kgInterface/';
   constructor(
     private http: HttpClient,
     private injector: Injector
@@ -37,7 +37,7 @@ export class HttpService {
 
   getSymptomsByBodyParts(params: any): Observable<any> {
     console.log(this.getParams(params));
-    return this.http.get('http://59.110.52.133:9501/kgInterface/getSymId/?' + this.getParams(params))
+    return this.http.get(this.baseUrl+'getSymId/?' + this.getParams(params))
       .do((res) => console.log(res));
   }
 
