@@ -42,7 +42,7 @@ export class BodySelectComponent implements OnInit {
   constructor(public httpService: HttpService, private router: Router) {
   }
   ngOnInit() {
-
+    this.getParts("全身");
   }
 
   filterOption(inputValue, option) {
