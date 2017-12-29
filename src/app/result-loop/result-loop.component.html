@@ -33,14 +33,14 @@
 
         </div>
         <div nz-col [nzSpan]="12">
-          <div nz-row>
-            <!--<div nz-col [nzSpan]="10">-->
-              <!--<h2 class="left">-->
-                <!--发病部位-->
-              <!--</h2>-->
-              <!--<br>-->
-              <!--<img style="width: 95%" src="../../assets/img/timg.jpeg">-->
-            <!--</div>-->
+         <!-- <div nz-row>
+            &lt;!&ndash;<div nz-col [nzSpan]="10">&ndash;&gt;
+              &lt;!&ndash;<h2 class="left">&ndash;&gt;
+                &lt;!&ndash;发病部位&ndash;&gt;
+              &lt;!&ndash;</h2>&ndash;&gt;
+              &lt;!&ndash;<br>&ndash;&gt;
+              &lt;!&ndash;<img style="width: 95%" src="../../assets/img/timg.jpeg">&ndash;&gt;
+            &lt;!&ndash;</div>&ndash;&gt;
             <div nz-col [nzSpan]="10">
               <h2 class="left">
                 已选症状
@@ -70,45 +70,64 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div>-->
            <div nz-row>
              <h2 style="font-weight: 200" class="left">
-               可能疾病
+               可能症状
              </h2>
              <br>
-             <div class="example" *ngIf="disLoading">
+             <!--<div class="example">
                <nz-spin [nzTip]="'正在读取数据...'"></nz-spin>
-             </div>
-             <div class="height-300" *ngIf="!disLoading">
-               <nz-checkable-tag style="margin-bottom: 1%"  *ngFor="let dis of probableDisease" [nzChecked]="dis.checked" (nzChange)="handleCheckChange($event, dis)">
-                 {{dis.Name}}
+             </div>-->
+             <div class="height-300">
+               <nz-checkable-tag style="margin-bottom: 1%"  *ngFor="let sym of new_symptom" [nzChecked]="sym.checked" (nzChange)="handleSymCheckChange($event, sym)">
+                 {{sym.Name}}
                </nz-checkable-tag>
              </div>
            </div>
-           <div nz-row>
+           <div nz-row *ngIf="new_course">
              <br>
              <h2 class="left">
-               相关科室
+               相关病程
              </h2>
              <br>
-             <div class="example" *ngIf="depLoading">
+             <!--<div class="example" *ngIf="depLoading">
                <nz-spin [nzTip]="'正在读取数据...'"></nz-spin>
-             </div>
-             <div class="height-300" *ngIf="!depLoading">
-               <nz-checkable-tag  style="margin-bottom: 1%" [nzColor]="'cyan'" *ngFor="let dep of probableDepartment">
-                 {{dep.Name}}
+             </div>-->
+             <div class="height-300">
+               <nz-checkable-tag  style="margin-bottom: 1%" *ngFor="let course of new_course" [nzChecked]="course.checked" (nzChange)="handleCourseCheckChange($event, course)">
+                 {{course.Name}}
                </nz-checkable-tag>
              </div>
            </div>
           <br>
+          <div nz-row *ngIf="new_complications">
+            <br>
+            <h2 class="left">
+              选择并发症
+            </h2>
+            <br>
+            <!--<div class="example" *ngIf="depLoading">
+              <nz-spin [nzTip]="'正在读取数据...'"></nz-spin>
+            </div>-->
+            <div class="height-300">
+              <nz-checkable-tag  style="margin-bottom: 1%" *ngFor="let comp of new_complications" [nzChecked]="comp.checked" (nzChange)="handleComplications($event, comp)">
+                {{comp.Name}}
+              </nz-checkable-tag>
+            </div>
+          </div>
           <div nz-row>
-            <button nz-button [nzType]="'dashed'" routerLink="../search_symptom">
+            <button nz-button [nzType]="'dashed'" routerLink="../">
               <i class="anticon anticon-left"></i>
               上一步
             </button>
-            <button nz-button [nzType]="'default'" style="left: 75%">
+            <button *ngIf="selected_symptom !== '' && selected_course !== ''" nz-button [nzType]="'primary'" style="left: 75%" (click)="getParams()" routerLink="../search_symptom">
               <i class="anticon anticon-right"></i>
-              下一步
+              查看诊断结果
+            </button>
+            <button *ngIf="selected_symptom === '' || selected_course === ''" disabled nz-button [nzType]="'default'" style="left: 70%"  >
+              <i class="anticon anticon-right"></i>
+              查看诊断结果
             </button>
           </div>
 

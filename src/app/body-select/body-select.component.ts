@@ -145,12 +145,14 @@ export class BodySelectComponent implements OnInit {
     this.router.navigate(['/result_loop']);
   }
 
-  getGender =(sex) => {
-    if(sex == 0){
+  getGender = (sex) => {
+    if (sex === 0) {
       return 'm';
-    }else if( sex === 1){
+    }else if ( sex === 1) {
       return 'w';
-    }else { return 'c'}
-  };
+    }else {
+      return 'c';
+    }
+  }
 
 }

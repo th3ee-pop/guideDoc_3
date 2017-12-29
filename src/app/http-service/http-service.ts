@@ -37,7 +37,7 @@ export class HttpService {
 
   getSymptomsByBodyParts(params: any): Observable<any> {
     console.log(this.getParams(params));
-    return this.http.get(this.baseUrl+'getSymId/?' + this.getParams(params))
+    return this.http.get(this.baseUrl + 'getSymId/?' + this.getParams(params))
       .do((res) => console.log(res));
   }
 
@@ -49,5 +49,11 @@ export class HttpService {
     });
     return this.http.get(this.baseUrl + 'get_symptom_disease/?q=' + str)
       .do((res) => console.log(res));
+  }
+  getDiagnosis(params: any): Observable<any> {
+    console.log(params);
+    const str = JSON.stringify(params);
+    return this.http.get(this.baseUrl + 'get_symptom_disease/?q=' + str)
+      .do(res => console.log(res));
   }
 }

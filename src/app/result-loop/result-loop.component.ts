@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../http-service/http-service';
 import { NzModalService } from 'ng-zorro-antd';
-import { LoopModalComponent } from './loop-modal/loop-modal.component';
 
 @Component({
   selector: 'app-result-loop',
@@ -9,70 +8,57 @@ import { LoopModalComponent } from './loop-modal/loop-modal.component';
   styleUrls: ['./result-loop.component.css']
 })
 export class ResultLoopComponent implements OnInit {
-
-  list: any[] = [];
-  title = 'app';
-  current = 1;
-  _value: string;
-  probableDisease: Array<any>;
-  probableDepartment= [];
-  probableSymptom: Array<any>;
-  originalDepartment: Array<any>;
-  resDep: any;
-  selectedSym = [];
-  notSym = [];
   disLoading = true;
   depLoading = true;
-  gender = 'M';
-
+  new_symptom: Array<any>;
+  new_course: Array<any>;
+  new_complications: Array<any>;
+  selected_complications = [];
+  selected_symptom = '';
+  selected_course = '';
   constructor( public httpService: HttpService, private modalService: NzModalService) {
   }
 
   ngOnInit() {
-    this.selectedSym.push(
-      {
-        name: sessionStorage.getItem('search_part_name'),
-        id: sessionStorage.getItem('search_part_id')
-      });
-    if (sessionStorage.getItem('Gender')) {
-      this.gender = sessionStorage.getItem('Gender');
-    }
-
-    this.httpService.getDisease([sessionStorage.getItem('search_part_id')], [], this.gender).subscribe((res) => {
-      console.log(res);
-      this.resDep = res.Results.PosDep;
-      this.probableDisease = res.Results.PosDis;
-      this.switchToCheckable(this.probableDisease);
-      this.probableSymptom = res.Results.PosSym;
-      console.log(res.Results.PosDep);
-      this.disLoading = false;
-      this.depLoading = false;
-      for (const key in res.Results.PosDep) {
-        console.log(key);
-        this.probableDepartment.push(res.Results.PosDep[key]);
-      }
-      console.log(this.probableDepartment);
-      this.originalDepartment = this.probableDepartment;
-    });
+    this.getParts();
   }
   switchToCheckable(DisArray: Array<any>) {
     DisArray.forEach((d) => {
       d.checked = false;
     });
   }
-  handleCheckChange(checked: boolean, item: any): void {
+  handleSymCheckChange(checked: boolean, item: any): void {
     item.checked = checked;
-    this.probableDisease.forEach((d) => {
+    this.new_symptom.forEach((d) => {
       if (d.Name === item.Name) {
         if (item.checked) {
-          const newDep = [];
-          item.department.forEach((p) => {
-            newDep.push(this.resDep[p]);
-          });
-          console.log(newDep);
-          this.probableDepartment = newDep;
+          this.selected_symptom = d.Id;
+          this.new_course = d.Course;
+          this.new_complications = [];
+          this.new_course.map(c => c.checked = false);
         } else {
-          this.probableDepartment = this.originalDepartment;
+          this.new_course = [];
+          this.selected_symptom = '';
+        }
+      } else {
+        d.checked = false;
+      }
+    });
+    console.log('hello');
+    console.log(this.new_complications);
+  }
+  handleCourseCheckChange(checked: boolean, item: any): void {
+    item.checked = checked;
+    this.new_course.forEach((d) => {
+      if (d.Name === item.Name) {
+        if (item.checked) {
+          this.selected_course = d.Id;
+          this.new_complications = d.Complications;
+          console.log(this.new_complications);
+          this.new_complications.map(m => m.checked = false);
+        } else {
+          this.new_complications = [];
+          this.selected_course = '';
         }
       } else {
         d.checked = false;
@@ -80,96 +66,19 @@ export class ResultLoopComponent implements OnInit {
     });
     console.log('hello');
   }
-  showLoopModal() {
-    const subscription = this.modalService.open({
-      title: '并发症情况',
-      content: LoopModalComponent,
-      onOk() {
-      },
-      onCancel() {
-        console.log('Click cancel');
-      },
-      footer: false,
-      componentParams: {
-        name: '测试渲染',
-        further_symptoms: this.probableSymptom,
-      }
-    });
-    subscription.subscribe((res: any) => {
-      console.log(res);
-      if (res.HaveSym || res.NotSym) {
-        const HaveSym = res.HaveSym;
-        const NotSym = res.NotSym;
-        const HaveSymId = [];
-        const NotHaveSymId = [];
-        console.log(HaveSym);
-        for (const item of HaveSym) {
-          this.selectedSym.push(item);
+  handleComplications(checked: boolean, item: any): void {
+    item.checked = checked;
+    if (item.checked) {
+      this.selected_complications.push(item);
+    } else {
+      for (let i = 0; i < this.selected_complications.length; i++) {
+        if (item.Id === this.selected_complications[i].Id) {
+          this.selected_complications.splice(i, 1);
         }
-        for (const item of this.selectedSym) {
-          HaveSymId.push(item.id);
-        }
-        for (const item of NotSym) {
-          this.notSym.push(item);
-          NotHaveSymId.push(item.id);
-        }
-        this.getDisease(HaveSymId, NotHaveSymId);
-      }
-    });
-  }
-
-  getDisease(Sym: Array<any>, notSym: Array<any>) {
-    this.disLoading = true;
-    this.depLoading = true;
-    this.httpService.getDisease(Sym, notSym, this.gender).subscribe(res => {
-      this.disLoading = false;
-      this.depLoading = false;
-      console.log(res);
-      this.probableDisease = res.Results.PosDis;
-      this.probableSymptom = res.Results.PosSym;
-      this.probableDepartment = [];
-      console.log(res.Results.PosDep);
-      for (const key in res.Results.PosDep) {
-        console.log(key);
-        this.probableDepartment.push(res.Results.PosDep[key]);
-      }
-      console.log(this.probableDepartment);
-    });
-  }
-  hashandleClose(item) {
-    const HaveSymId = [];
-    const NotHaveSymId = [];
-    for (let i = 0; i < this.selectedSym.length; i++) {
-      if (this.selectedSym[i].id === item.id) {
-        this.selectedSym.splice(i, 1);
       }
     }
-    for (const sym of this.selectedSym) {
-      HaveSymId.push(sym.id);
-    }
-    for (const sym of this.notSym) {
-      NotHaveSymId.push(sym.id);
-    }
-    this.getDisease(HaveSymId, NotHaveSymId);
+    console.log(this.selected_complications);
   }
-
-  nothandleClose(item) {
-    const HaveSymId = [];
-    const NotHaveSymId = [];
-    for (let i = 0; i < this.notSym.length; i++) {
-      if (this.notSym[i].id === item.id) {
-        this.notSym.splice(i, 1);
-      }
-    }
-    for (const sym of this.selectedSym) {
-      HaveSymId.push(sym.id);
-    }
-    for (const sym of this.notSym) {
-      NotHaveSymId.push(sym.id);
-    }
-    this.getDisease(HaveSymId, NotHaveSymId);
-  }
-
 
   filterOption(inputValue, option) {
     return option.description.indexOf(inputValue) > -1;
@@ -185,5 +94,38 @@ export class ResultLoopComponent implements OnInit {
 
   change(ret: any) {
     console.log('nzChange', ret);
+  }
+
+  getParts() {
+    const gender = sessionStorage.getItem('Gender');
+    const part = sessionStorage.getItem('part');
+    const params = {
+      'Name': '',
+      'Body': part,
+      'Gender': gender
+    };
+    console.log(params);
+    this.httpService.getSymptomsByBodyParts(params).subscribe((res) => {
+      res.Results.map((d) => {
+        d.checked = false;
+      });
+      this.new_symptom = res.Results;
+      console.log(this.new_symptom);
+    });
+
+  }
+  getParams() {
+    const selectedComId = [];
+    this.selected_complications.forEach(d => selectedComId.push(d.Id));
+    console.log(selectedComId);
+    const searchParams = {
+      Sid: this.selected_symptom,
+      Course: this.selected_course,
+      Gender: sessionStorage.getItem('Gender'),
+      Complications: selectedComId,
+    };
+    console.log(searchParams);
+    sessionStorage.setItem('search_params', JSON.stringify(searchParams));
+    console.log(JSON.parse(sessionStorage.getItem('search_params')));
   }
 }

@@ -15,39 +15,18 @@ export class SearchSymptomComponent implements OnInit {
   _value= '';
   Symptomes: Array<any>;
   hasSym = sessionStorage.getItem('search_part_id');
+  searchParams: any;
+  relatedDisease: Array<any>;
 
   constructor(public httpService: HttpService, private router: Router) {
   }
   ngOnInit() {
-    for (let i = 0; i < 20; i++) {
-      this.list.push({
-        key: i.toString(),
-        title: `content${i + 1}`,
-        description: `description of content${i + 1}`,
-        direction: Math.random() * 2 > 1 ? 'right' : ''
-      });
-    }
-    console.log(this.list);
-    this.httpService.getSymptoms('a').subscribe((res) => {
+    this.searchParams = JSON.parse(sessionStorage.getItem('search_params'));
+    console.log(this.searchParams);
+    this.httpService.getDiagnosis(this.searchParams).subscribe(res => {
       console.log(res);
-      this.Symptomes = res.Results;
-      console.log(this.Symptomes);
+      this.relatedDisease = res.Reaults.PosDis;
     });
-  }
-
-  searchSymptom() {
-    this.httpService.getSymptoms(this._value).subscribe((res) => {
-      console.log(res);
-      this.Symptomes = res.Results;
-      console.log(this.Symptomes);
-    });
-  }
-  selectSymptom(symptom: any) {
-    console.log(symptom);
-    this.httpService.searchPart = symptom;
-    sessionStorage.setItem('search_part_name', symptom.Name);
-    sessionStorage.setItem('search_part_id', symptom.Id);
-    this.router.navigate(['/result_loop']);
   }
 
   filterOption(inputValue, option) {
