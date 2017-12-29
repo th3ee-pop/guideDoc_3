@@ -16,7 +16,8 @@ export class SearchSymptomComponent implements OnInit {
   Symptomes: Array<any>;
   hasSym = sessionStorage.getItem('search_part_id');
   searchParams: any;
-  relatedDisease: Array<any>;
+  relatedDisease = [];
+  posDep: any;
 
   constructor(public httpService: HttpService, private router: Router) {
   }
@@ -26,6 +27,7 @@ export class SearchSymptomComponent implements OnInit {
     this.httpService.getDiagnosis(this.searchParams).subscribe(res => {
       console.log(res);
       this.relatedDisease = res.Reaults.PosDis;
+      this.posDep = res.Reaults.PosDep;
     });
   }
 

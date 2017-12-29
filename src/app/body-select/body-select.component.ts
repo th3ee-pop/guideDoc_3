@@ -123,7 +123,12 @@ export class BodySelectComponent implements OnInit {
     this.side = num;
   }
   getParts(event: any) {
-    const gender = sessionStorage.getItem('Gender');
+    let gender = '';
+    if (sessionStorage.getItem('Gender')) {
+      gender = sessionStorage.getItem('Gender');
+    } else {
+      gender = 'm';
+    }
     this.part = this.dic[gender][event];
     sessionStorage.setItem('part', event);
     const params = {
