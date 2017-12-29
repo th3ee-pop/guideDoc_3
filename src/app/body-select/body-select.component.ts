@@ -116,14 +116,14 @@ export class BodySelectComponent implements OnInit {
 
   changeSex(num) {
     this.sex = num;
+    const gender = this.getGender(this.sex);
+    sessionStorage.setItem('Gender', gender);
   }
   changeSide(num) {
     this.side = num;
   }
   getParts(event: any) {
-    const gender = this.getGender(this.sex);
-    sessionStorage.setItem('Gender', gender);
-
+    const gender = sessionStorage.getItem('Gender');
     this.part = this.dic[gender][event];
     sessionStorage.setItem('part', event);
     const params = {
