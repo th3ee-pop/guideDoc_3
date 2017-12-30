@@ -84,6 +84,7 @@ export class ResultLoopComponent implements OnInit {
     return option.description.indexOf(inputValue) > -1;
   }
 
+
   search(ret: any) {
     console.log('nzSearchChange', ret);
   }

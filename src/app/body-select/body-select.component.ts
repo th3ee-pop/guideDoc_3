@@ -95,7 +95,8 @@ export class BodySelectComponent implements OnInit {
   constructor(public httpService: HttpService, private router: Router) {
   }
   ngOnInit() {
-    this.getParts("bp42");
+    sessionStorage.setItem('Gender','m');
+    // this.getParts("bp42");
   }
 
   filterOption(inputValue, option) {
@@ -118,19 +119,14 @@ export class BodySelectComponent implements OnInit {
     this.sex = num;
     const gender = this.getGender(this.sex);
     sessionStorage.setItem('Gender', gender);
+    sessionStorage.setItem('part', this.dic[gender][0]);
   }
   changeSide(num) {
     this.side = num;
   }
   getParts(event: any) {
-    let gender = '';
-    if (sessionStorage.getItem('Gender')) {
-      gender = sessionStorage.getItem('Gender');
-    } else {
-      gender = 'm';
-      sessionStorage.setItem('Gender', 'm');
-    }
-    this.part = this.dic[gender][event];
+    let gender = sessionStorage.getItem('Gender');
+    // this.part = this.dic[gender][event];
     sessionStorage.setItem('part', event);
     const params = {
       'Name': '',
@@ -139,15 +135,14 @@ export class BodySelectComponent implements OnInit {
     };
     console.log(params);
     this.httpService.getSymptomsByBodyParts(params).subscribe((res) => {
-      this.data = res.Results;
+      this.Symptomes = res.Results;
+      console.log(this.Symptomes);
     });
-
   }
+
   selectSymptom(symptom: any) {
     console.log(symptom);
-    this.httpService.searchPart = symptom;
-    sessionStorage.setItem('search_part_name', symptom.Name);
-    sessionStorage.setItem('search_part_id', symptom.Id);
+    sessionStorage.setItem('select_symptom', JSON.stringify(symptom));
     this.router.navigate(['/result_loop']);
   }
 

@@ -13,12 +13,15 @@ import { SearchSymptomComponent } from './search-symptom/search-symptom.componen
 import { ResultLoopComponent } from './result-loop/result-loop.component';
 import { HttpService } from './http-service/http-service';
 import { LoopModalComponent } from './result-loop/loop-modal/loop-modal.component';
+import { SearchComponent } from './search/search.component';
 
 const appRoutes: Routes = [
   {path: '', component: AppComponent, children: [
     {path: '', component: BodySelectComponent},
+    {path: 'body_select', component: BodySelectComponent},
     {path: 'search_symptom', component: SearchSymptomComponent},
-    {path: 'result_loop', component: ResultLoopComponent}
+    {path: 'result_loop', component: ResultLoopComponent},
+    {path: 'search', component: SearchComponent}
   ]}
 ]
 
@@ -30,7 +33,8 @@ const appRoutes: Routes = [
     BodySelectComponent,
     SearchSymptomComponent,
     ResultLoopComponent,
-    LoopModalComponent
+    LoopModalComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,

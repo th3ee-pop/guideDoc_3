@@ -1,0 +1,91 @@
+<nz-layout class="layout">
+  <nz-header>
+    <div class="logo"></div>
+
+  </nz-header>
+  <nz-content style="padding:0 50px;">
+    <nz-breadcrumb style="margin:12px 0;">
+
+    </nz-breadcrumb>
+    <div style="background:#fff; padding: 24px; min-height: 280px;">
+      <nz-steps>
+        <nz-step [nzTitle]="'部位选择'"  [nzStatus]="'finish'">
+          <ng-template #nzIcon>
+            <i class="anticon anticon-user-add"></i>
+          </ng-template>
+        </nz-step>
+        <nz-step [nzTitle]="'疾病症状'"  [nzStatus]="'process'">
+          <ng-template #nzIcon>
+            <i class="anticon anticon-search"></i>
+          </ng-template>
+        </nz-step>
+        <nz-step [nzTitle]="'诊断结果'"  [nzStatus]="'wait'">
+          <ng-template #nzIcon>
+            <i class="anticon anticon-file-text"></i>
+          </ng-template>
+        </nz-step>
+      </nz-steps>
+      <br>
+      <br>
+      <br>
+      <div nz-row>
+        <div nz-col [nzSpan]="8">
+
+        </div>
+        <div nz-col [nzSpan]="8" >
+          <div nz-row>
+            <div nz-col [nzSpan]="6"></div>
+            <div nz-col [nzSpan]="6"></div>
+          </div>
+          <div nz-row [nzType]="'flex'" [nzJustify]="'center'">
+            <nz-radio-group [(ngModel)]="radioValue">
+              <label nz-radio [nzValue]="'m'">
+                <span>男性</span>
+              </label>
+              <label nz-radio [nzValue]="'w'">
+                <span>女性</span>
+              </label>
+              <label nz-radio [nzValue]="'c'">
+                <span>儿童</span>
+              </label>
+            </nz-radio-group>
+          </div>
+          <!--</div>-->
+          <br>
+          <div nz-row [nzType]="'flex'" [nzJustify]="'center'">
+            <nz-input [nzType]="'search'" [nzPlaceHolder]="'输入症状'" [(ngModel)]="_value" (ngModelChange)="searchSymptom($event)" style="width: 40%;"></nz-input>
+          </div>
+          <br>
+          <!--<div nz-col [nzSpan]="12">-->
+          <br>
+          <div nz-row [nzType]="'flex'" [nzJustify]="'center'">
+            <div class="height-300">
+              <nz-tag  style="margin-bottom: 1%" [nzColor]="'cyan'" *ngFor="let symptom of Symptomes" (click)="selectSymptom(symptom)">
+                {{symptom.Name}}
+              </nz-tag>
+            </div>
+
+          </div>
+
+          <br>
+          <br>
+
+          <div nz-row>
+            <button nz-button [nzType]="'dashed'" routerLink="../search" [disabled]="true">
+              <i class="anticon anticon-left"></i>
+              搜索症状
+            </button>
+            <button nz-button [nzType]="'default'" style="left: 70%" routerLink="../body_select">
+              <i class="anticon anticon-right"></i>
+              选择部位
+            </button>
+          </div>
+        </div>
+        <div nz-col [nzSpan]="8">
+
+        </div>
+      </div>
+    </div>
+  </nz-content>
+  <nz-footer style="text-align: center;">Ant Design ©2017 Implement By Angular</nz-footer>
+</nz-layout>
