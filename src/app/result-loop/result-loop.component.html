@@ -9,12 +9,12 @@
     </nz-breadcrumb>
     <div style="background:#fff; padding: 24px; min-height: 280px;">
       <nz-steps>
-        <nz-step [nzTitle]="'部位选择'" [nzStatus]="'wait'">
+        <nz-step [nzTitle]="'症状选择'" [nzStatus]="'finish'">
           <ng-template #nzIcon>
             <i class="anticon anticon-user-add"></i>
           </ng-template>
         </nz-step>
-        <nz-step [nzTitle]="'疾病症状'"  [nzStatus]="'finish'">
+        <nz-step [nzTitle]="'病程与并发症'"  [nzStatus]="'process'">
           <ng-template #nzIcon>
             <i class="anticon anticon-search"></i>
           </ng-template>
@@ -121,11 +121,11 @@
               <i class="anticon anticon-left"></i>
               上一步
             </button>
-            <button *ngIf="selected_symptom !== '' && selected_course !== ''" nz-button [nzType]="'primary'" style="left: 75%" (click)="getParams()" routerLink="../search_symptom">
+            <button *ngIf="selected_course !== ''" nz-button [nzType]="'primary'" style="left: 75%" (click)="getParams()" routerLink="../search_symptom">
               <i class="anticon anticon-right"></i>
               查看诊断结果
             </button>
-            <button *ngIf="selected_symptom === '' || selected_course === ''" disabled nz-button [nzType]="'default'" style="left: 70%"  >
+            <button *ngIf="selected_course === ''" disabled nz-button [nzType]="'default'" style="left: 70%"  >
               <i class="anticon anticon-right"></i>
               查看诊断结果
             </button>

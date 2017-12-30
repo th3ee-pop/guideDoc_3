@@ -10,17 +10,18 @@ import { Router, Route } from '@angular/router';
 export class SearchComponent implements OnInit {
 
   radioValue = 'm';
+  Symptomes: any;
   constructor(public httpService: HttpService, private router: Router) { }
 
   ngOnInit() {
   }
 
-  searchSymptom(searchText){
-    if( searchText ){
+  searchSymptom(searchText) {
+    if ( searchText ) {
       const param = {
-        'Name':searchText,
-        'Body':'',
-        'Gender':this.radioValue
+        'Name': searchText,
+        'Body': '',
+        'Gender': this.radioValue
       };
       this.httpService.getSymptomsByBodyParts(param).subscribe((res) => {
         console.log(res);

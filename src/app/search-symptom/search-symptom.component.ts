@@ -16,6 +16,7 @@ export class SearchSymptomComponent implements OnInit {
   Symptomes: Array<any>;
   hasSym = sessionStorage.getItem('search_part_id');
   searchParams: any;
+  selectedSymptom: any;
   relatedDisease = [];
   posDep: any;
 
@@ -23,6 +24,7 @@ export class SearchSymptomComponent implements OnInit {
   }
   ngOnInit() {
     this.searchParams = JSON.parse(sessionStorage.getItem('search_params'));
+    this.selectedSymptom = JSON.parse(sessionStorage.getItem('select_symptom'));
     console.log(this.searchParams);
     this.httpService.getDiagnosis(this.searchParams).subscribe(res => {
       console.log(res);

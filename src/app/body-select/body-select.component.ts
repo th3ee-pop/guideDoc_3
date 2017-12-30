@@ -90,6 +90,7 @@ export class BodySelectComponent implements OnInit {
   side = 0 ;
   part= '头部';
   title = 'app';
+  Symptomes: any;
 
   data ;
   constructor(public httpService: HttpService, private router: Router) {

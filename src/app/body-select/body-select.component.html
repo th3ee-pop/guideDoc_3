@@ -9,12 +9,12 @@
     </nz-breadcrumb>
     <div style="background:#fff; padding: 24px; min-height: 280px;">
       <nz-steps>
-        <nz-step [nzTitle]="'部位选择'" [nzStatus]="'process'">
+        <nz-step [nzTitle]="'症状选择'" [nzStatus]="'process'">
           <ng-template #nzIcon>
             <i class="anticon anticon-user-add"></i>
           </ng-template>
         </nz-step>
-        <nz-step [nzTitle]="'疾病症状'"  [nzStatus]="'wait'">
+        <nz-step [nzTitle]="'病程与并发症'"  [nzStatus]="'wait'">
           <ng-template #nzIcon>
             <i class="anticon anticon-search"></i>
           </ng-template>
@@ -70,21 +70,16 @@
           </div>
           <div nz-col [nzSpan]="6"></div>
         </div>
+        <br>
+        <br>
         <div nz-row>
-            <div nz-col [nzSpan]="6"></div>
-            <div nz-col [nzSpan]="12">
-              <!--<h2 style="font-weight: 200">-->
-                <!--已选部位-->
-              <!--</h2>-->
-              <!--<br>-->
-              <!--<div class="height-300">-->
-                <!--<nz-tag style="margin-bottom: 1%" [nzColor]="'red'">-->
-                  <!--{{part}}-->
-                <!--</nz-tag>-->
-              <!--</div>-->
-          <br>
-
-              <div nz-row [nzType]="'flex'" [nzJustify]="'center'">
+            <div nz-col [nzSpan]="8"></div>
+            <div nz-col [nzSpan]="8">
+              <h2 *ngIf="Symptomes">
+                相关症状
+              </h2>
+              <br>
+              <div nz-row [nzType]="'flex'">
 
                 <div class="height-300">
                   <nz-tag  style="margin-bottom: 1%" [nzColor]="'cyan'" *ngFor="let symptom of Symptomes" (click)="selectSymptom(symptom)">
@@ -94,22 +89,24 @@
 
               </div>
             </div>
-            <div nz-col [nzSpan]="6">
+            <div nz-col [nzSpan]="8">
             </div>
 
         </div>
+        <br>
+        <br>
         <div nz-row>
           <div nz-col [nzSpan]="8">
 
           </div>
           <div nz-col [nzSpan]="8" >
-          <button nz-button [nzType]="'default'" routerLink="../search">
+          <button nz-button [nzType]="'default'" [disabled]="true">
             <i class="anticon anticon-left"></i>
-            搜索症状
-          </button>
-          <button nz-button [nzType]="'dashed'" style="left: 70%" routerLink="../" [disabled]="true">
-            <i class="anticon anticon-right"></i>
             选择部位
+          </button>
+          <button nz-button [nzType]="'default'" style="left: 70%" routerLink="/search" >
+            <i class="anticon anticon-right"></i>
+            搜索症状
           </button>
         </div>
         </div>

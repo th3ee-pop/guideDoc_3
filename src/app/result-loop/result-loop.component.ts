@@ -16,11 +16,16 @@ export class ResultLoopComponent implements OnInit {
   selected_complications = [];
   selected_symptom = '';
   selected_course = '';
+  selectedSymptom: any;
   constructor( public httpService: HttpService, private modalService: NzModalService) {
   }
 
   ngOnInit() {
-    this.getParts();
+    this.selectedSymptom = JSON.parse(sessionStorage.getItem('select_symptom'));
+    console.log(this.selectedSymptom);
+    this.new_symptom = [this.selectedSymptom];
+    this.new_course = this.selectedSymptom.Course;
+   // this.getParts();
   }
   switchToCheckable(DisArray: Array<any>) {
     DisArray.forEach((d) => {
@@ -29,21 +34,6 @@ export class ResultLoopComponent implements OnInit {
   }
   handleSymCheckChange(checked: boolean, item: any): void {
     item.checked = checked;
-    this.new_symptom.forEach((d) => {
-      if (d.Name === item.Name) {
-        if (item.checked) {
-          this.selected_symptom = d.Id;
-          this.new_course = d.Course;
-          this.new_complications = [];
-          this.new_course.map(c => c.checked = false);
-        } else {
-          this.new_course = [];
-          this.selected_symptom = '';
-        }
-      } else {
-        d.checked = false;
-      }
-    });
     console.log('hello');
     console.log(this.new_complications);
   }
@@ -120,7 +110,7 @@ export class ResultLoopComponent implements OnInit {
     this.selected_complications.forEach(d => selectedComId.push(d.Id));
     console.log(selectedComId);
     const searchParams = {
-      Sid: this.selected_symptom,
+      Sid: this.selectedSymptom.Id,
       Course: this.selected_course,
       Gender: sessionStorage.getItem('Gender'),
       Complications: selectedComId,
