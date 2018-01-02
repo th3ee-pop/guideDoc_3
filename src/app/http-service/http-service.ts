@@ -56,4 +56,16 @@ export class HttpService {
     return this.http.get(this.baseUrl + 'get_symptom_disease/?q=' + str)
       .do(res => console.log(res));
   }
+  getKnowledge(params: string): Observable<any> {
+    console.log(params);
+    const str = JSON.stringify({
+      path: '/medknowledge/op',
+      params: {
+        Table: 'disease',
+        Id: params
+      }
+    });
+    return this.http.get('http://59.110.52.133:3010/api/transfer/?q=' + str)
+      .do(res => console.log(res));
+  }
 }

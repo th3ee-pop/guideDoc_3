@@ -28,9 +28,14 @@ export class SearchSymptomComponent implements OnInit {
     console.log(this.searchParams);
     this.httpService.getDiagnosis(this.searchParams).subscribe(res => {
       console.log(res);
+      res.Reaults.PosDis.map(d => d.expand = false);
       this.relatedDisease = res.Reaults.PosDis;
       this.posDep = res.Reaults.PosDep;
     });
+  }
+  getKnowledge(Id: string) {
+    this.httpService.getKnowledge(Id).subscribe(res => console.log(res)
+    );
   }
 
   filterOption(inputValue, option) {

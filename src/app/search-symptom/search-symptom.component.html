@@ -37,6 +37,8 @@
                     nzIsPagination="false">
             <thead nz-thead>
             <tr>
+              <th nz-th nzExpand>
+              </th>
               <th nz-th>
                 疾病
               </th>
@@ -49,19 +51,36 @@
             </tr>
             </thead>
             <tbody nz-tbody>
-            <tr nz-tbody-tr *ngFor="let data of nzTable.data">
-              <td nz-td>
-                {{data.Name}}
-              </td>
-              <td nz-td>
-                {{data.possibility}}
-              </td>
-              <td nz-td>
-                <nz-tag  style="margin-bottom: 1%" [nzColor]="'cyan'" *ngFor="let dep of data.department">
-                  {{posDep[dep].Name}}
-                </nz-tag>
-              </td>
-            </tr>
+            <ng-template ngFor let-data [ngForOf]="nzTable.data">
+              <tr nz-tbody-tr >
+                <td nz-td *ngIf="!data.child_disease"></td>
+                <td nz-td nzExpand *ngIf="data.child_disease">
+                  <nz-row-expand-icon [(nzExpand)]="data.expand"></nz-row-expand-icon>
+                </td>
+                <td nz-td>
+                  {{data.Name}}
+                </td>
+                <td nz-td>
+                  {{data.possibility}}
+                </td>
+                <td nz-td>
+                  <nz-tag  style="margin-bottom: 1%" [nzColor]="'cyan'" *ngFor="let dep of data.department">
+                    {{posDep[dep].Name}}
+                  </nz-tag>
+                </td>
+              </tr>
+              <tr nz-tbody-tr *ngIf="data.expand">
+                <td nz-td></td>
+                <td nz-td colspan="4">
+                  &nbsp;
+                  <nz-tag  style="margin-bottom: 1%" [nzColor]="'#aaaaaa'" *ngFor="let child of data.child_disease"
+                           (click)="getKnowledge(child.Id)">
+                    {{child.Name}}
+                  </nz-tag>
+                </td>
+              </tr>
+            </ng-template>
+
             </tbody>
           </nz-table>
           <br>
@@ -79,10 +98,10 @@
           <br>
 
           <div nz-row>
-            <button nz-button [nzType]="'default'" routerLink="../">
+            <button nz-button [nzType]="'default'" style="left: 20%" routerLink="../">
               重新选择部位
             </button>
-            <button  nz-button [nzType]="'default'" style="left: 10%" routerLink="../result_loop">
+            <button  nz-button [nzType]="'default'" style="left: 22%" routerLink="../result_loop">
               重新选择症状
             </button>
           </div>
