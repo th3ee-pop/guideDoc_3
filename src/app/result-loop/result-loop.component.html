@@ -85,21 +85,7 @@
                </nz-checkable-tag>
              </div>
            </div>
-           <div nz-row *ngIf="new_course">
-             <br>
-             <h2 class="left">
-               相关病程
-             </h2>
-             <br>
-             <!--<div class="example" *ngIf="depLoading">
-               <nz-spin [nzTip]="'正在读取数据...'"></nz-spin>
-             </div>-->
-             <div class="height-300">
-               <nz-checkable-tag  style="margin-bottom: 1%" *ngFor="let course of new_course" [nzChecked]="course.checked" (nzChange)="handleCourseCheckChange($event, course)">
-                 {{course.Name}}
-               </nz-checkable-tag>
-             </div>
-           </div>
+
           <br>
           <div nz-row *ngIf="new_complications">
             <br>
@@ -121,11 +107,7 @@
               <i class="anticon anticon-left"></i>
               上一步
             </button>
-            <button *ngIf="selected_course !== ''" nz-button [nzType]="'primary'" style="left: 75%" (click)="getParams()" routerLink="../search_symptom">
-              <i class="anticon anticon-right"></i>
-              查看诊断结果
-            </button>
-            <button *ngIf="selected_course === ''" disabled nz-button [nzType]="'default'" style="left: 70%"  >
+            <button  nz-button [nzType]="'primary'" style="left: 75%" (click)="getParams()" routerLink="../search_symptom">
               <i class="anticon anticon-right"></i>
               查看诊断结果
             </button>

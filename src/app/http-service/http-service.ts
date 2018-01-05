@@ -11,7 +11,7 @@ import {extractStyleParams} from '@angular/animations/browser/src/util';
 
 export class HttpService {
   searchPart: any;
-  baseUrl = 'http://59.110.52.133:9502/kgInterface/';
+  baseUrl = 'http://59.110.52.133:9555/kgInterface/';
   constructor(
     private http: HttpClient,
     private injector: Injector

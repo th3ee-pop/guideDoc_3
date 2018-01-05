@@ -24,7 +24,7 @@ export class ResultLoopComponent implements OnInit {
     this.selectedSymptom = JSON.parse(sessionStorage.getItem('select_symptom'));
     console.log(this.selectedSymptom);
     this.new_symptom = [this.selectedSymptom];
-    this.new_course = this.selectedSymptom.Course;
+    this.new_complications = this.selectedSymptom.Complications;
    // this.getParts();
   }
   switchToCheckable(DisArray: Array<any>) {
@@ -36,25 +36,6 @@ export class ResultLoopComponent implements OnInit {
     item.checked = checked;
     console.log('hello');
     console.log(this.new_complications);
-  }
-  handleCourseCheckChange(checked: boolean, item: any): void {
-    item.checked = checked;
-    this.new_course.forEach((d) => {
-      if (d.Name === item.Name) {
-        if (item.checked) {
-          this.selected_course = d.Id;
-          this.new_complications = d.Complications;
-          console.log(this.new_complications);
-          this.new_complications.map(m => m.checked = false);
-        } else {
-          this.new_complications = [];
-          this.selected_course = '';
-        }
-      } else {
-        d.checked = false;
-      }
-    });
-    console.log('hello');
   }
   handleComplications(checked: boolean, item: any): void {
     item.checked = checked;
